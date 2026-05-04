@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCookie } from '../utils/cookieUtils.js';
 
-//const API_BASE_URL = 'http://localhost:10000/api';
+//onst API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
 // const API_BASE_URL = 'https://chatbot-backend.onrender.com/api';
  const API_BASE_URL = 'https://aichat-backend-0hmj.onrender.com/api';
 
@@ -14,9 +14,9 @@ apiClient.interceptors.request.use((config) => {
   const token = getCookie('token');
   console.log('📤 Request to', config.url, 'token:', token ? 'present' : 'MISSING');
   // REMOVED Bearer - backend expects cookie auth (withCredentials true)
-  // if (token) {
-  //   config.headers.Authorization = `Bearer ${token}`;
-  // }
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
 

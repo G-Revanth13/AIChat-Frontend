@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { getCookie } from '../utils/cookieUtils.js';
 
-const API_BASE_URL = 'http://localhost:10000/api';
+//const API_BASE_URL = 'http://localhost:10000/api';
 // const API_BASE_URL = 'https://chatbot-backend.onrender.com/api';
-// const API_BASE_URL = 'https://aichatbot-backend-d92c.onrender.com/api';
+ const API_BASE_URL = 'https://aichat-backend-0hmj.onrender.com/api';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

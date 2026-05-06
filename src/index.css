@@ -532,14 +532,31 @@ body {
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+
   min-height: 0;
 }
 
+
+
 .sessions-list::-webkit-scrollbar {
-  display: none;
+  width: 8px;
 }
+
+.sessions-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sessions-list::-webkit-scrollbar-thumb {
+  background: rgba(15,23,42,0.35);
+  border-radius: 999px;
+}
+
+.sessions-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(15,23,42,0.55);
+}
+
 
 .sessions-list li {
   padding: 18px 20px;
@@ -590,7 +607,10 @@ body {
   flex-direction: column;
   background: white;
   color: #111827;
+  min-width: 0;
+  min-height: 0;
 }
+
 
 .chat-main header {
   padding: 18px 28px;
@@ -640,10 +660,13 @@ body {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
   overscroll-behavior: contain;
+
+
   padding: 20px 0;
   display: flex;
   flex-direction: column;
@@ -654,8 +677,26 @@ body {
 }
 
 .messages-container::-webkit-scrollbar {
-  display: none;
+  width: 8px;
+  height: 8px;
+  display: initial;
 }
+
+
+
+.messages-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: rgba(15,23,42,0.35);
+  border-radius: 999px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(15,23,42,0.55);
+}
+
 
 .message {
   display: flex;

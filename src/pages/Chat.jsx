@@ -35,8 +35,9 @@ const Chat = () => {
       <div className="chat-main">
         <header>
           <button className="sidebar-toggle" onClick={() => setSidebarOpen((prev) => !prev)}>
-            {sidebarOpen ? 'Close history' : 'Open history'}
+            {sidebarOpen ? '×' : '☰'}
           </button>
+
           <h1>AI CHAT</h1>
         </header>
         <div className="messages-container">

@@ -43,9 +43,18 @@ const ChatSidebar = ({ sessions, onNewChat, onSelectSession, activeSession, onLo
           );
         })}
       </ul>
-      <button className="logout-btn" onClick={onLogout}>
+      <button
+        className="logout-btn"
+        onClick={() => {
+          // Custom dialog instead of browser confirm/alert
+          const ok = window.confirm('Do you want to logout?');
+          if (ok) onLogout();
+        }}
+      >
         Logout
       </button>
+
+
     </div>
   );
 };

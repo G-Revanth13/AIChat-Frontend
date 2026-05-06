@@ -51,7 +51,7 @@ export const useChat = () => {
       // Append AI response
       setMessages(prev => [...prev, { text: response.reply || response.aiResponse || response.content || 'AI response', isUser: false, timestamp: Date.now() }]);
       
-      // Refetch
+      // Refetch history to sync with latest session data
       await loadHistory();
     } catch (error) {
       console.error('Send error:', error);
@@ -63,15 +63,18 @@ export const useChat = () => {
 
 
   const newChat = () => {
+    setMessages([]); // Clear messages first
     setCurrentSessionId(null); // null for backend to create new session
-    setMessages([]);
   };
 
 
   const selectSession = (sessionId) => {
+    // First clear messages to prevent showing old data
+    setMessages([]);
+    setCurrentSessionId(sessionId);
+    
     const session = sessions.find(s => s.sessionId === sessionId);
-    if (session) {
-      setCurrentSessionId(sessionId);
+    if (session && session.messages) {
       setMessages(session.messages.map(m => ({ text: m.content, isUser: m.role === 'user' })));
     }
   };

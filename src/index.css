@@ -29,6 +29,9 @@ body {
   touch-action: manipulation;
 }
 
+
+
+
 .auth-page {
   display: flex;
   justify-content: center;
@@ -491,6 +494,62 @@ body {
   padding: 16px 20px;
 }
 
+.sidebar-footer {
+  padding: 16px 20px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-footer-divider {
+  display: none;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sidebar-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.18);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  color: #7dd3fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.sidebar-user-meta {
+  min-width: 0;
+}
+
+.sidebar-user-name {
+  color: #f8fafc;
+  font-weight: 650;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-user-status {
+  margin-top: 2px;
+  color: rgba(226, 232, 240, 0.75);
+  font-size: 12px;
+}
+
+.logout-btn {
+  margin: 0;
+  width: 100%;
+}
+
+
 .sidebar-close {
   display: inline-flex;
   align-items: center;
@@ -643,16 +702,81 @@ body {
   font-weight: 600;
   color: #f8fafc;
   margin: 20px;
-  margin-top: auto;
+  margin: 0;
   width: calc(100% - 40px);
 }
+
+/* Sidebar footer should keep logout button neatly under the user card */
+.sidebar-footer .logout-btn {
+  margin-top: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+}
+
 
 .logout-btn:hover {
   background: rgba(56,189,248,0.18);
   transform: scale(1.01);
 }
 
+/* Sidebar footer (ChatGPT-style user block) */
+.sidebar-footer {
+  padding: 16px 20px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-footer-divider {
+  display: none;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sidebar-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.18);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  color: #7dd3fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.sidebar-user-meta {
+  min-width: 0;
+}
+
+.sidebar-user-name {
+  color: #f8fafc;
+  font-weight: 650;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-user-status {
+  margin-top: 2px;
+  color: rgba(226, 232, 240, 0.75);
+  font-size: 12px;
+}
+
+.logout-btn {
+  margin: 0;
+  width: 100%;
+}
+
 .logout-icon {
+
   font-size: 18px;
 }
 

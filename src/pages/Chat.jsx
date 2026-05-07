@@ -38,7 +38,10 @@ const Chat = () => {
             {sidebarOpen ? '×' : '☰'}
           </button>
 
-          <h1>AI CHAT</h1>
+          <div className="chat-header-left">
+            <h1>AI CHAT</h1>
+          </div>
+
         </header>
         <div className="messages-container">
           {messages.map((msg, index) => (

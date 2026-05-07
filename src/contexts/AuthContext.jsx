@@ -12,11 +12,12 @@ export const AuthProvider = ({ children }) => {
     const initializeAuth = () => {
       const storedToken = getCookie('token');
       const storedUserId = getCookie('userId');
-      console.log('Auth init - cookies:', {token: !!storedToken, userId: storedUserId});
+      const storedUserName = getCookie('userName');
+      console.log('Auth init - cookies:', { token: !!storedToken, userId: storedUserId, userName: storedUserName });
 
       if (storedToken && storedUserId) {
         setToken(storedToken);
-        setUser({ id: storedUserId });
+        setUser({ id: storedUserId, userName: storedUserName || null });
       }
       setLoading(false);
     };
@@ -33,10 +34,11 @@ export const AuthProvider = ({ children }) => {
       if (data.token && data.userId) {
         setCookie('token', data.token, 7);
         setCookie('userId', data.userId, 7);
+        setCookie('userName', data.userName, 7);
         setToken(data.token);
-        setUser({ id: data.userId });
-        console.log('✅ State/cookies updated, user:', { id: data.userId });
-        return { success: true, user: { id: data.userId }, token: data.token };
+        setUser({ id: data.userId, userName: data.userName || data.userName === '' ? data.userName : null });
+        console.log('✅ State/cookies updated, user:', { id: data.userId, userName: data.userName });
+        return { success: true, user: { id: data.userId, userName: data.userName }, token: data.token };
       }
       console.log('❌ Invalid login data:', data);
       return { success: false, error: data.message || 'Login failed' };
@@ -54,8 +56,9 @@ export const AuthProvider = ({ children }) => {
       if (data?.token && data?.userId) {
         setCookie('token', data.token, 7);
         setCookie('userId', data.userId, 7);
+        setCookie('userName', data.userName, 7);
         setToken(data.token);
-        setUser({ id: data.userId });
+        setUser({ id: data.userId, userName: data.userName });
         return { success: true, message: 'Registered successfully' };
       }
 
@@ -77,6 +80,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     deleteCookie('token');
     deleteCookie('userId');
+    deleteCookie('userName');
     setUser(null);
     setToken(null);
   };

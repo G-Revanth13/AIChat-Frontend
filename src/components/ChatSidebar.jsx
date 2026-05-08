@@ -1,5 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { useAuth } from '../contexts/useAuth.jsx';
+import ConfirmDialog from './ConfirmDialog.jsx';
 
 const ChatSidebar = ({ sessions, onNewChat, onSelectSession, activeSession, onLogout, isOpen, onClose }) => {
   const sidebarClass = `chat-sidebar${isOpen ? ' open' : ''}`;
@@ -11,10 +14,7 @@ const ChatSidebar = ({ sessions, onNewChat, onSelectSession, activeSession, onLo
     return first ? first.toUpperCase() : '?';
   }, [user?.userName]);
 
-  const handleLogout = () => {
-    const ok = window.confirm('Do you want to logout?');
-    if (ok) onLogout();
-  };
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const UserFooter = () => (
     <div className="sidebar-footer">
@@ -29,55 +29,63 @@ const ChatSidebar = ({ sessions, onNewChat, onSelectSession, activeSession, onLo
         </div>
       </div>
 
-      <button className="logout-btn" onClick={handleLogout}>
+      <button className="logout-btn" onClick={() => setConfirmOpen(true)}>
         Logout
       </button>
     </div>
   );
 
-  if (sessions.length === 0) {
-    return (
-      <div className={sidebarClass}>
-        <div className="sidebar-header">
-          <button className="sidebar-close" onClick={onClose}>Close</button>
-        </div>
-        <button onClick={onNewChat} className="new-chat-btn">
-          New Chat
-        </button>
-        <div className="empty-state">Start a new conversation</div>
-        <UserFooter />
-      </div>
-    );
-  }
-
-  return (
-    <div className={sidebarClass}>
+  const sidebarBody = (
+    <>
       <div className="sidebar-header">
-        <button className="sidebar-close" onClick={onClose}>Close</button>
+        <button className="sidebar-close" onClick={onClose}>
+          Close
+        </button>
       </div>
       <button onClick={onNewChat} className="new-chat-btn">
         + New Chat
       </button>
 
-      <ul className="sessions-list">
-        {sessions.map((session) => {
-          const title = session.title || session.preview || 'Conversation';
-          return (
-            <li
-              key={session.sessionId}
-              className={activeSession === session.sessionId ? 'active' : ''}
-              onClick={() => onSelectSession(session.sessionId)}
-            >
-              <div className="session-title">{title}</div>
-              {session.title && <div className="preview">{session.preview}</div>}
-            </li>
-          );
-        })}
-      </ul>
+      {sessions.length === 0 ? (
+        <div className="empty-state">Start a new conversation</div>
+      ) : (
+        <ul className="sessions-list">
+          {sessions.map((session) => {
+            const title = session.title || session.preview || 'Conversation';
+            return (
+              <li
+                key={session.sessionId}
+                className={activeSession === session.sessionId ? 'active' : ''}
+                onClick={() => onSelectSession(session.sessionId)}
+              >
+                <div className="session-title">{title}</div>
+                {session.title && <div className="preview">{session.preview}</div>}
+              </li>
+            );
+          })}
+        </ul>
+      )}
 
       <UserFooter />
-    </div>
+
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Confirm Logout"
+        message="Do you want to logout?"
+        cancelText="Cancel"
+        confirmText="Logout"
+        confirmTone="danger"
+        onCancel={() => setConfirmOpen(false)}
+        onConfirm={async () => {
+          toast.info('Logging out...', { autoClose: 1500 });
+          setConfirmOpen(false);
+          onLogout();
+        }}
+      />
+    </>
   );
+
+  return <div className={sidebarClass}>{sidebarBody}</div>;
 };
 
 export default ChatSidebar;
